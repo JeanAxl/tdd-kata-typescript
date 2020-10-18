@@ -53,8 +53,4 @@ describe('fizzBuzz', () => {
       expect(result).toBe('fizzBuzz');
     });
   });
-
-  describe('generate', () => {
-    it('should generate');
-  });
 });
