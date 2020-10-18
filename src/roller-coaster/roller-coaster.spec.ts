@@ -60,7 +60,7 @@ describe('roller coaster', () => {
 
     it('should run roller_coaster.harder', () => {
       const inputs = parseFile('roller_coaster.harder');
-      expect(rollerCoaster(inputs)).toEqual(89744892565569);
+      expect(rollerCoaster(inputs)).toEqual(89744892714152289);
     });
   });
 });
