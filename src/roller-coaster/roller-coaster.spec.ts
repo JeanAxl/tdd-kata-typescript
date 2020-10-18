@@ -48,12 +48,17 @@ describe('roller coaster', () => {
   });
 
   describe('large inputs', () => {
-    it.skip('should run roller_coaster.hard', () => {
+    it('should run roller_coaster.hard', () => {
       const inputs = parseFile('roller_coaster.hard');
+      expect(rollerCoaster(inputs)).toEqual(8974489271113753);
+    });
+
+    it('should run roller_coaster.hard from coding game', () => {
+      const inputs = parseFile('roller_coaster.cg');
       expect(rollerCoaster(inputs)).toEqual(89744892565569);
     });
 
-    it.skip('should run roller_coaster.harder', () => {
+    it('should run roller_coaster.harder', () => {
       const inputs = parseFile('roller_coaster.harder');
       expect(rollerCoaster(inputs)).toEqual(89744892565569);
     });

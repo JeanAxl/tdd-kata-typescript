@@ -8,12 +8,32 @@ const rollerCoaster = ({ L, C, N, pis }: { L: number; C: number; N: number; pis:
   let currentGroupIndex = 0;
   let numberOfGroupsInTheRide = 0;
 
-  while (C > 0) {
-    while (numberOfPeopleInTheCurrentRide + pis[currentGroupIndex] <= L && numberOfGroupsInTheRide < N) {
-      numberOfPeopleInTheCurrentRide += pis[currentGroupIndex];
-      currentGroupIndex = currentGroupIndex === N - 1 ? 0 : currentGroupIndex + 1;
+  const memoizedValues = new Map();
 
-      numberOfGroupsInTheRide++;
+  while (C > 0) {
+    if (!memoizedValues.has(currentGroupIndex)) {
+      const indexToMap = currentGroupIndex;
+
+      while (numberOfPeopleInTheCurrentRide + pis[currentGroupIndex] <= L && numberOfGroupsInTheRide < N) {
+        numberOfPeopleInTheCurrentRide += pis[currentGroupIndex];
+        currentGroupIndex = currentGroupIndex === N - 1 ? 0 : currentGroupIndex + 1;
+
+        numberOfGroupsInTheRide++;
+      }
+
+      memoizedValues.set(indexToMap, {
+        numberOfGroupsInTheRide,
+        numberOfPeopleInTheCurrentRide,
+      });
+    } else {
+      const knowCombination = memoizedValues.get(currentGroupIndex);
+      const newIndex = currentGroupIndex + knowCombination.numberOfGroupsInTheRide;
+      if (newIndex < N) {
+        currentGroupIndex = newIndex;
+      } else {
+        currentGroupIndex = newIndex - N;
+      }
+      numberOfPeopleInTheCurrentRide = knowCombination.numberOfPeopleInTheCurrentRide;
     }
 
     earnings += numberOfPeopleInTheCurrentRide;
