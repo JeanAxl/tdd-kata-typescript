@@ -16,11 +16,9 @@ const rollerCoaster = ({ L, C, N, pis }: { L: number; C: number; N: number; pis:
   }
 
   let earnings;
-  let currentGroupIndex;
 
   const { updatedC, updatesEarnings, updatedGroupIndex, memoizedRidesByGroup } = getMemoizedValues({ L, C, N, pis });
 
-  currentGroupIndex = updatedGroupIndex;
   C = updatedC;
   earnings = updatesEarnings;
 
@@ -28,11 +26,29 @@ const rollerCoaster = ({ L, C, N, pis }: { L: number; C: number; N: number; pis:
     return earnings;
   }
 
-  const { numberOfRidesPerCycle, earningsPerCycle } = getRidesCycle(memoizedRidesByGroup, currentGroupIndex);
+  const { numberOfRidesPerCycle, earningsPerCycle } = getRidesCycle(memoizedRidesByGroup, updatedGroupIndex);
 
-  earnings += Math.trunc(C / numberOfRidesPerCycle) * earningsPerCycle;
+  const earningsOfRemainingCycles = getEarningsOfRemainingCycles(C, numberOfRidesPerCycle, earningsPerCycle);
+  const earningsOfLastIncompleteCycle = getEarningsOfLastIncompleteCycle(
+    C,
+    memoizedRidesByGroup,
+    updatedGroupIndex,
+    numberOfRidesPerCycle,
+  );
 
+  earnings += earningsOfRemainingCycles + earningsOfLastIncompleteCycle;
+
+  return earnings;
+};
+
+const getEarningsOfLastIncompleteCycle = (
+  C: number,
+  memoizedRidesByGroup: MemoizedRides,
+  currentGroupIndex: number,
+  numberOfRidesPerCycle: number,
+) => {
   const ridesLeft = C % numberOfRidesPerCycle;
+  let earnings = 0;
 
   for (let i = 0; i < ridesLeft; i++) {
     const knowCombination = getMemoizedValue(memoizedRidesByGroup, currentGroupIndex);
@@ -41,6 +57,10 @@ const rollerCoaster = ({ L, C, N, pis }: { L: number; C: number; N: number; pis:
   }
 
   return earnings;
+};
+
+const getEarningsOfRemainingCycles = (C: number, numberOfRidesPerCycle: number, earningsPerCycle: number) => {
+  return Math.trunc(C / numberOfRidesPerCycle) * earningsPerCycle;
 };
 
 const getMemoizedValues = ({ L, C, N, pis }: { L: number; C: number; N: number; pis: number[] }) => {
