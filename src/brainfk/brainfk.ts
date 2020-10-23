@@ -77,7 +77,6 @@ type BracketPair = {
 };
 
 export function getBracketPairs(inputString: string): BracketPair[] {
-  console.log(inputString);
   if (inputString.length === 0) {
     return [];
   }
@@ -91,8 +90,10 @@ export function getBracketPairs(inputString: string): BracketPair[] {
     }
     if (char === ']') {
       const newPair = incompletePairs.pop();
-      newPair.close = index;
-      completePairs.push(newPair);
+      if (newPair) {
+        newPair.close = index;
+        completePairs.push(newPair);
+      }
     }
   });
   return completePairs;
@@ -100,12 +101,20 @@ export function getBracketPairs(inputString: string): BracketPair[] {
 
 function getOpeningBracketIndex(bracketPairs: BracketPair[], closingIndex: number): number {
   const pair = bracketPairs.find((pair: BracketPair) => pair.close === closingIndex);
-  return pair.open;
+  if (pair) {
+    return pair.open;
+  }
+
+  throw 'Pair not found';
 }
 
 function getClosingBracketIndex(bracketPairs: BracketPair[], openingIndex: number): number {
   const pair = bracketPairs.find((pair: BracketPair) => pair.open === openingIndex);
-  return pair.close;
+  if (pair) {
+    return pair.close;
+  }
+
+  throw 'Pair not found';
 }
 
 export function brainLuck(code: string, inputString: string): string {
