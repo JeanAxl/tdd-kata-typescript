@@ -1,14 +1,14 @@
 import { GameOfLife, Cell } from './GameOfLife';
 
 describe('Game of life utils', () => {
-  it('can be init', () => {
+  it('Can be init', () => {
     const gameOfLife = new GameOfLife();
     const result = gameOfLife.getGrid();
 
     expect(result).toEqual(new Map());
   });
 
-  it('can get and set cell', () => {
+  it('Can get and set cell', () => {
     const gameOfLife = new GameOfLife();
     gameOfLife.setCell(0, 0, Cell.ALIVE);
     const result = gameOfLife.getCell(0, 0);
@@ -16,7 +16,7 @@ describe('Game of life utils', () => {
     expect(result).toEqual(Cell.ALIVE);
   });
 
-  it('can init with height and width', () => {
+  it('Can init with height and width', () => {
     const gameOfLife = new GameOfLife();
 
     gameOfLife.init(4, 3);
@@ -26,6 +26,15 @@ describe('Game of life utils', () => {
 
     expect(size).toBe(12);
     expect(cell).toEqual(Cell.DEAD);
+  });
+  it('Can retrieve  height and width', () => {
+    const gameOfLife = new GameOfLife();
+
+    gameOfLife.init(4, 3);
+    const { width, height } = gameOfLife.getDimensions();
+
+    expect(width).toBe(4);
+    expect(height).toBe(3);
   });
 });
 

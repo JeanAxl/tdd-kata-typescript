@@ -26,7 +26,7 @@ class GameOfLife {
     }
   }
 
-  getDimensions() {
+  getDimensions(): { width: number; height: number } {
     return { width: this.width, height: this.height };
   }
 
@@ -69,7 +69,7 @@ class GameOfLife {
     }, 0);
   }
 
-  nextGeneration() {
+  nextGeneration(): void {
     const newCellGrid = new Map();
     let aliveNeighbors = 0;
     let currentCell;
