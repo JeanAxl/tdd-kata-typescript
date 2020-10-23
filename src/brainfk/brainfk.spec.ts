@@ -64,6 +64,18 @@ describe('tdd style', () => {
     assert.equal(brainLuck('[].', String.fromCharCode(0)), String.fromCharCode(0));
     assert.equal(brainLuck(',[-].', String.fromCharCode(0)), String.fromCharCode(0));
   });
+
+  it('should fail when malformed brackets', () => {
+    const toTest1 = () => {
+      brainLuck(',-].', String.fromCharCode(0));
+    };
+    expect(toTest1).toThrow('Pair not found');
+
+    const toTest2 = () => {
+      brainLuck(',[-][.', String.fromCharCode(0));
+    };
+    expect(toTest2).toThrow('Pair not found');
+  });
 });
 
 describe('brainLuck', () => {
