@@ -2,12 +2,21 @@ import { Cell, GameOfLife } from './GameOfLife';
 
 const gameOfLife = new GameOfLife();
 
-gameOfLife.init(40, 40);
-gameOfLife.setCell(1, 37, Cell.ALIVE);
-gameOfLife.setCell(2, 37, Cell.ALIVE);
-gameOfLife.setCell(3, 37, Cell.ALIVE);
-gameOfLife.setCell(3, 38, Cell.ALIVE);
-gameOfLife.setCell(2, 39, Cell.ALIVE);
+gameOfLife.init(1600, 1000);
+const n = 6;
+const m = 3;
+const p = 20;
+gameOfLife.setCell(120 + n, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(121 + n, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(122 + n, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(122 + n, 13 + p, Cell.ALIVE);
+gameOfLife.setCell(121 + n, 14 + p, Cell.ALIVE);
+
+gameOfLife.setCell(120 - m, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(121 - m, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(122 - m, 12 + p, Cell.ALIVE);
+gameOfLife.setCell(122 - m, 13 + p, Cell.ALIVE);
+gameOfLife.setCell(121 - m, 14 + p, Cell.ALIVE);
 
 const print = (gameOfLife: GameOfLife) => {
   console.clear();
@@ -18,7 +27,7 @@ const print = (gameOfLife: GameOfLife) => {
   const lines = [];
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      currentLine += gameOfLife.getCell(x, y) === Cell.ALIVE ? '⚫ ' : '⚪ ';
+      currentLine += gameOfLife.getCell(x, y) === Cell.ALIVE ? '⚪' : '';
     }
 
     lines.unshift(currentLine);
@@ -29,7 +38,7 @@ const print = (gameOfLife: GameOfLife) => {
 };
 
 const run = () => {
-  print(gameOfLife);
+  console.log('loop');
   gameOfLife.nextGeneration();
   sleep(100);
 };
